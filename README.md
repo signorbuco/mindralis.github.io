@@ -1,2 +1,0 @@
-# mindralis.github.io
-c
