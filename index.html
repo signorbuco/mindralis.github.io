@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Storia dell'Intelligenza Artificiale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #0b1220;
+      --fg: #e8eefc;
+      --muted: #a0aec0;
+      --accent: #7c5cff;
+      --card: rgba(17, 24, 39, 0.75);
+      --border: rgba(148, 163, 184, 0.25);
+      --glow: rgba(124, 92, 255, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, rgba(124, 92, 255, 0.15), transparent 50%),
+                  radial-gradient(circle at bottom, rgba(56, 189, 248, 0.1), transparent 40%),
+                  var(--bg);
+      color: var(--fg);
+      line-height: 1.7;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(180deg, rgba(11, 18, 32, 0.95) 0%, rgba(11, 18, 32, 0.75) 100%);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+    }
+
+    nav a.brand {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      color: var(--fg);
+    }
+
+    nav .menu {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav .menu a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    nav .menu a:hover,
+    nav .menu a:focus {
+      color: var(--fg);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem 6rem;
+    }
+
+    .hero {
+      padding: 6rem 0 4rem;
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 3.5vw, 3.5rem);
+      line-height: 1.15;
+      margin: 0 0 1.5rem;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .hero-card {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 80px rgba(12, 15, 31, 0.65);
+    }
+
+    h2 {
+      margin-top: 4.5rem;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      position: relative;
+    }
+
+    h2::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.75rem;
+      width: 72px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), rgba(124, 92, 255, 0));
+      border-radius: 999px;
+    }
+
+    .timeline {
+      margin-top: 2.5rem;
+      border-left: 2px solid rgba(124, 92, 255, 0.3);
+      padding-left: 1.75rem;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: 0;
+      bottom: 0;
+      border-left: 2px dashed rgba(124, 92, 255, 0.15);
+      pointer-events: none;
+    }
+
+    .timeline-item {
+      margin-bottom: 2.5rem;
+      position: relative;
+      padding-left: 0.5rem;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-item::before {
+      content: attr(data-year);
+      position: absolute;
+      left: -6.1rem;
+      top: 0.5rem;
+      width: 5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .timeline-item::after {
+      content: "";
+      position: absolute;
+      left: -2.05rem;
+      top: 0.9rem;
+      width: 0.9rem;
+      height: 0.9rem;
+      background: var(--bg);
+      border: 3px solid var(--accent);
+      border-radius: 999px;
+      box-shadow: 0 0 0 6px rgba(124, 92, 255, 0.1);
+    }
+
+    .timeline-item h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1.35rem;
+    }
+
+    .timeline-item p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.75rem;
+      margin-top: 2.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      box-shadow: 0 18px 50px rgba(8, 12, 24, 0.5);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .quote {
+      margin-top: 3.5rem;
+      padding: 2.5rem;
+      border-radius: 24px;
+      border: 1px solid rgba(124, 92, 255, 0.25);
+      background: linear-gradient(135deg, rgba(124, 92, 255, 0.12), rgba(56, 189, 248, 0.15));
+      box-shadow: 0 35px 85px rgba(10, 14, 35, 0.55);
+    }
+
+    .quote p {
+      font-size: 1.15rem;
+      margin: 0;
+    }
+
+    .quote span {
+      display: block;
+      margin-top: 1.2rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding: 2.5rem 0 3rem;
+      color: rgba(160, 174, 192, 0.8);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    @media (max-width: 720px) {
+      nav {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .timeline {
+        border-left: none;
+        padding-left: 0;
+      }
+
+      .timeline::before {
+        display: none;
+      }
+
+      .timeline-item::before {
+        position: static;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-item::after {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a class="brand" href="#inizio">AI Heritage</a>
+      <div class="menu">
+        <a href="#timeline">Timeline</a>
+        <a href="#pionieri">Pionieri</a>
+        <a href="#inverno">Inverni</a>
+        <a href="#rinascita">Rinascita</a>
+        <a href="#oggi">Oggi</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="inizio">
+    <section class="hero">
+      <div>
+        <h1>Una storia affascinante di intuizioni, entusiasmi e rivoluzioni</h1>
+        <p>
+          Dall'idea di macchine pensanti formulata a metà Novecento alla rivoluzione delle reti neurali profonde e dei modelli generativi, l'intelligenza artificiale è una disciplina che si è evoluta tra cicli di grande ottimismo e periodi di scetticismo. Ripercorriamo le tappe chiave che hanno plasmato il campo.
+        </p>
+      </div>
+      <div class="hero-card">
+        <h3>Che cos'è l'IA?</h3>
+        <p>
+          L'intelligenza artificiale è lo studio e la progettazione di sistemi in grado di svolgere compiti che, se eseguiti dall'uomo, richiederebbero intelligenza. Comprende filoni simbolici e statistici, si nutre di dati, regole e capacità di apprendimento.
+        </p>
+      </div>
+    </section>
+
+    <section id="timeline">
+      <h2>Decenni di ricerca e innovazione</h2>
+      <div class="timeline">
+        <article class="timeline-item" data-year="1943-1950">
+          <h3>Le prime basi teoriche</h3>
+          <p>
+            Warren McCulloch e Walter Pitts propongono il primo modello matematico di neurone artificiale (1943), mentre Alan Turing introduce il test per valutare l'intelligenza di una macchina (1950). Si gettano le fondamenta concettuali del campo.
+          </p>
+        </article>
+        <article class="timeline-item" data-year="1956">
+          <h3>La nascita ufficiale: Conferenza di Dartmouth</h3>
+          <p>
+            John McCarthy conia il termine "artificial intelligence" e riunisce ricercatori come Marvin Minsky, Claude Shannon e Herbert Simon. È l'inizio dell'era simbolica, concentrata su logica, regole e manipolazione di simboli.
+          </p>
+        </article>
+        <article class="timeline-item" data-year="1958-1969">
+          <h3>Ottimismo e primi successi</h3>
+          <p>
+            LISP, linguaggio creato da McCarthy, diventa lo strumento principe per l'IA. Programmi come ELIZA, SHRDLU e i dimostratori di teoremi dimostrano che le macchine possono manipolare linguaggio e ragionamento formale.
+          </p>
+        </article>
+        <article class="timeline-item" data-year="1970-1980">
+          <h3>Il primo "inverno" dell'IA</h3>
+          <p>
+            Le difficoltà nel gestire la complessità del mondo reale e i limiti hardware generano disillusione. I finanziamenti calano drasticamente e molti laboratori chiudono o riconvertono le attività.
+          </p>
+        </article>
+        <article class="timeline-item" data-year="1980-1987">
+          <h3>L'era degli expert system</h3>
+          <p>
+            I sistemi esperti basati su regole, come XCON di Digital Equipment Corporation, dimostrano valore industriale. Nascono start-up e investimenti dedicati, insieme a strumenti per la rappresentazione della conoscenza.
+          </p>
+        </article>
+        <article class="timeline-item" data-year="1987-1993">
+          <h3>Secondo "inverno" e ritorno dell'apprendimento</h3>
+          <p>
+            I costi di manutenzione dei sistemi esperti e le aspettative esagerate provocano un nuovo crollo. Al contempo, la ricerca sulle reti neurali con il backpropagation e sui metodi statistici riprende vigore.
+          </p>
+        </article>
+        <article class="timeline-item" data-year="1997-2011">
+          <h3>Successi emblematici e big data</h3>
+          <p>
+            Deep Blue sconfigge Garry Kasparov (1997), seguita da sistemi come Watson (2011) e dai progressi nel riconoscimento vocale e visivo grazie a maggiori dati e potenza computazionale.
+          </p>
+        </article>
+        <article class="timeline-item" data-year="2012-2017">
+          <h3>L'esplosione del deep learning</h3>
+          <p>
+            AlexNet trionfa nella ImageNet Challenge (2012), aprendo la stagione delle reti profonde. AlphaGo, generative adversarial networks e modelli sequence-to-sequence trasformano il panorama delle applicazioni.
+          </p>
+        </article>
+        <article class="timeline-item" data-year="2018-2024">
+          <h3>L'era dei modelli generativi</h3>
+          <p>
+            L'arrivo di grandi modelli linguistici (GPT, BERT) e multimodali abilita assistenti conversazionali, creazione di immagini e analisi avanzata. L'attenzione si sposta su etica, trasparenza e impatto sociale.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="pionieri">
+      <h2>Le menti che hanno plasmato l'IA</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Alan Turing</h3>
+          <p>Matematico britannico, anticipò il concetto di macchina universale e definì un criterio per valutare l'intelligenza artificiale con il suo famoso test.</p>
+        </article>
+        <article class="card">
+          <h3>John McCarthy</h3>
+          <p>Padre dell'espressione "intelligenza artificiale", ideò il linguaggio LISP e promosse la visione dell'IA come disciplina autonoma.</p>
+        </article>
+        <article class="card">
+          <h3>Marvin Minsky</h3>
+          <p>Co-fondatore del MIT AI Lab, contribuì alla visione della mente come insieme di agenti intelligenti e fu figura centrale nella divulgazione.</p>
+        </article>
+        <article class="card">
+          <h3>Geoffrey Hinton</h3>
+          <p>Tra i pionieri del deep learning, sviluppò algoritmi fondamentali per l'addestramento di reti neurali profonde e promosse l'uso di GPU.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="inverno">
+      <h2>Perché arrivarono gli "inverni" dell'IA?</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Limiti tecnologici</h3>
+          <p>Calcolo e memoria erano insufficienti per sostenere l'ambizione dei progetti simbolici o neurali. I risultati sperimentali erano difficili da generalizzare.</p>
+        </article>
+        <article class="card">
+          <h3>Aspettative sproporzionate</h3>
+          <p>Promesse poco realistiche portarono a delusioni tra governi e aziende, che tagliarono i finanziamenti dopo i primi fallimenti.</p>
+        </article>
+        <article class="card">
+          <h3>Gestione della conoscenza</h3>
+          <p>Formalizzare il buon senso e aggiornare grandi basi di regole si rivelò oneroso, rendendo fragile l'adozione industriale dei sistemi esperti.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="rinascita">
+      <h2>La rinascita statistica e neurale</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Dati e potenza di calcolo</h3>
+          <p>Internet, sensori e GPU hanno reso disponibili enormi quantità di dati e capacità computazionale, favorendo modelli di apprendimento automatico sempre più accurati.</p>
+        </article>
+        <article class="card">
+          <h3>Algoritmi innovativi</h3>
+          <p>Reti convoluzionali, LSTM, reinforcement learning profondo e transformers hanno rivoluzionato visione, linguaggio e decision making.</p>
+        </article>
+        <article class="card">
+          <h3>Nuove applicazioni</h3>
+          <p>Dalla medicina alla finanza, passando per l'arte generativa, l'IA è entrata in prodotti e servizi quotidiani creando nuove industrie e professionalità.</p>
+        </article>
+      </div>
+      <div class="quote">
+        <p>"Ogni grande ondata di intelligenza artificiale ci ricorda che le macchine amplificano le capacità umane, ma non sostituiscono il pensiero critico e la responsabilità collettiva."</p>
+        <span>Riflessione contemporanea</span>
+      </div>
+    </section>
+
+    <section id="oggi">
+      <h2>Le sfide attuali e i prossimi passi</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Etica e regolamentazione</h3>
+          <p>Bias algoritmici, privacy e sorveglianza richiedono linee guida chiare e strumenti di auditing per garantire un impatto positivo sulla società.</p>
+        </article>
+        <article class="card">
+          <h3>Affidabilità e trasparenza</h3>
+          <p>Explainable AI, valutazioni di robustezza e sistemi ibridi simbolico-neurali sono al centro della ricerca per costruire fiducia negli utenti.</p>
+        </article>
+        <article class="card">
+          <h3>Collaborazione uomo-macchina</h3>
+          <p>L'attenzione si sposta su interfacce conversazionali, strumenti creativi e assistenti che affiancano gli esseri umani anziché sostituirli.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Ultimo aggiornamento 2024 · Contenuti redatti a scopo divulgativo · <a href="#inizio">Torna all'inizio</a>
+  </footer>
+
+  <script>
+    const links = document.querySelectorAll('a[href^="#"]');
+    links.forEach(link => {
+      link.addEventListener('click', event => {
+        const targetId = link.getAttribute('href').substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          event.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
